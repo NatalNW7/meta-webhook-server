@@ -1,9 +1,14 @@
 FROM node:22-alpine
 
-COPY . ./
+WORKDIR /app
+
+COPY package*.json ./
+
+RUN npm install -g npm@11.6.4 && \
+    npm install --no-audit --no-fund
+
+COPY . .
 
 EXPOSE 3000
 
-RUN npm install -g npm@11.6.4
-RUN npm install express
-RUN node server.js
+CMD ["node", "server.js"]
